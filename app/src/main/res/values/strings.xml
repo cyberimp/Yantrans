@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name" translatable="false">Yantrans</string>
+    <string name="title_translate">Translate</string>
+    <string name="title_history">History</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_favorite">Favorites</string>
+
+    <string name="hint_word">Word to translate</string>
+    <string name="action_swap">Swap languages</string>
+    <string name="c_by_yandex">Translated by Яндекс.Переводчик</string>
+    <string name="yandex_translator_image">Yandex Translator Image</string>
+    <string name="loading">Loading…</string>
+    <string name="lang_ru" translatable="false">RU</string>
+    <string name="lang_en" translatable="false">EN</string>
+    <string name="blind_translate_arrow">to</string>
+    <string name="translation_name">Translation</string>
+    <string name="error_wrong_key">Wrong/banned API key or Yandex is unreachable</string>
+    <string name="error_wrong_iternets">Yandex is unreachable, check your internet settings</string>
+
+    <string-array name="langs_default">
+        <item>English</item>
+        <item>Russian</item>
+        <item>Japanese</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_search_history">Search in history</string>
+    <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non semper tellus, nec viverra arcu. Vestibulum pellentesque quam sit amet justo sollicitudin, a ultricies neque commodo. In urna purus, finibus id sodales ut, pharetra nec risus. Pellentesque eu libero eu odio posuere volutpat vitae aliquam diam. Sed id odio egestas, finibus magna nec, laoreet diam. In ultricies nisl et eros hendrerit bibendum. Curabitur porttitor, est ac hendrerit ultricies, quam lacus interdum dolor, eu ultricies odio nibh sit amet lorem. Sed varius mauris ac vestibulum scelerisque.</string>
+    <string name="here_be_translation">Translation will be here</string>
+</resources>

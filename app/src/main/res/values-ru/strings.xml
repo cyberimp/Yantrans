@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_search_history">Поиск в истории</string>
+    <string name="action_swap">Поменять языки</string>
+    <string name="blind_translate_arrow">на</string>
+    <string name="c_by_yandex">Переведено Яндекс.Переводчиком</string>
+    <string name="error_wrong_iternets">Яндекс недоступен, проверьте интернеты</string>
+    <string name="error_wrong_key">Неправильный/заблокированый ключ или нет доступа к серверам Яндекса</string>
+    <string name="hello_blank_fragment">Привет пустой фрагмент</string>
+    <string name="here_be_translation">Здесь будет перевод</string>
+    <string name="hint_word">Фраза для перевода</string>
+    <string name="loading">Загрузка…</string>
+    <string name="title_favorite">Избранное</string>
+    <string name="title_history">История</string>
+    <string name="title_settings">Настройки</string>
+    <string name="title_translate">Перевод</string>
+    <string name="translation_name">Перевод</string>
+    <string name="yandex_translator_image">Яндекс переводчик</string>
+</resources>
