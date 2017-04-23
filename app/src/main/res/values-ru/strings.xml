@@ -16,4 +16,10 @@
     <string name="title_translate">Перевод</string>
     <string name="translation_name">Перевод</string>
     <string name="yandex_translator_image">Яндекс переводчик</string>
+    <string-array name="langs_default">
+        <item>Английский</item>
+        <item>Русский</item>
+        <item>Японский</item>
+    </string-array>
+
 </resources>
