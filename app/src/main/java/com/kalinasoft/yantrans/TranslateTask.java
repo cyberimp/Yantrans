@@ -7,7 +7,6 @@ import android.os.AsyncTask;
  * Translation task, that can be detached and attached to fragment
  */
 
-@SuppressWarnings("DefaultFileTemplate")
 class TranslateTask extends AsyncTask<String,Integer,String> {
 
     interface Comm{

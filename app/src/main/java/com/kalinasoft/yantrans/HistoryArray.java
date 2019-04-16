@@ -28,7 +28,6 @@ class HistoryArray {
         try {
             fIn = context.openFileInput("history.dat");
             osw = new ObjectInputStream(fIn);
-            //noinspection unchecked
             content = (ArrayList<HistoryItem>) osw.readObject();
             osw.close();
             fIn.close();
