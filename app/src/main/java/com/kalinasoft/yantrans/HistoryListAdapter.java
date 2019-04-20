@@ -17,7 +17,7 @@ class HistoryListAdapter extends BaseAdapter {
 
     private HistoryArray content;
     private LayoutInflater mInflater;
-    private boolean favsOnly = false;
+    private boolean favsOnly;
     private Context context;
 
 
@@ -49,11 +49,11 @@ class HistoryListAdapter extends BaseAdapter {
         if(view == null){
             view = mInflater.inflate(R.layout.history_item, viewGroup, false);
             holder = new ViewHolder();
-            holder.word = (TextView)view.findViewById(R.id.word);
-            holder.translation = (TextView)view.findViewById(R.id.translation);
-            holder.lang_to = (TextView)view.findViewById(R.id.lang_from);
-            holder.lang_from = (TextView)view.findViewById(R.id.lang_to);
-            holder.favored = (CheckBox)view.findViewById(R.id.favorited);
+            holder.word = view.findViewById(R.id.word);
+            holder.translation = view.findViewById(R.id.translation);
+            holder.lang_to = view.findViewById(R.id.lang_from);
+            holder.lang_from = view.findViewById(R.id.lang_to);
+            holder.favored = view.findViewById(R.id.favorited);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();

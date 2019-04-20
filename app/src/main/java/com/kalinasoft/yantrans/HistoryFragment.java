@@ -2,6 +2,7 @@ package com.kalinasoft.yantrans;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +34,11 @@ public class HistoryFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragmentView = inflater.inflate(R.layout.fragment_history, container, false);
-        ListView lv = (ListView) fragmentView.findViewById(R.id.history_list);
+        ListView lv = fragmentView.findViewById(R.id.history_list);
         HistoryArray.getInstance().loadArray(getContext());
         lv.setAdapter(new HistoryListAdapter(getActivity(),HistoryArray.getInstance(),false));
         return fragmentView;

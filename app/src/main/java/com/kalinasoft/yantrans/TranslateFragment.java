@@ -3,6 +3,7 @@ package com.kalinasoft.yantrans;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,8 +25,7 @@ import android.widget.TextView;
  */
 public class TranslateFragment extends Fragment implements TranslateTask.Comm{
 
-    @SuppressWarnings("unused")
-    private static final String TAG = "TranslateFragment";
+//    private static final String TAG = "TranslateFragment";
 
 
 //    private OnFragmentInteractionListener mListener;
@@ -72,23 +72,27 @@ public class TranslateFragment extends Fragment implements TranslateTask.Comm{
     boolean translating = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         HistoryArray.getInstance().loadArray(getContext());
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_translate, container, false);
 
         //
+        ArrayAdapter<String> langList;
+        if (getContext() != null)
+            langList = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, YandexApi.getInstance().getLanguages());
+        else
+            langList = null;
 
-        ArrayAdapter<String> langList = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item,YandexApi.getInstance().getLanguages());
+        sv = root.findViewById(R.id.scroll);
 
-        sv = (ScrollView)root.findViewById(R.id.scroll);
+        from = root.findViewById(R.id.left_lang);
+        to = root.findViewById(R.id.right_lang);
 
-        from = (Spinner)root.findViewById(R.id.left_lang);
-        to = (Spinner)root.findViewById(R.id.right_lang);
-
-        from.setAdapter(langList);
+        if (langList != null)
+            from.setAdapter(langList);
 
         int from_position = YandexApi.getInstance().getLang_from();
         from.setSelection(from_position);
@@ -104,7 +108,8 @@ public class TranslateFragment extends Fragment implements TranslateTask.Comm{
             }
         });
 
-        to.setAdapter(langList);
+        if (langList != null)
+            to.setAdapter(langList);
         int to_position = YandexApi.getInstance().getLang_to();
         to.setSelection(to_position);
         to.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -119,10 +124,10 @@ public class TranslateFragment extends Fragment implements TranslateTask.Comm{
             }
         });
 
-        et = (EditText)root.findViewById(R.id.input_word);
+        et = root.findViewById(R.id.input_word);
   //      if (savedInstanceState!= null)
   //          et.setText(savedInstanceState.getCharSequence("word"));
-        trans = (TextView)root.findViewById(R.id.translation);
+        trans = root.findViewById(R.id.translation);
   //      if (savedInstanceState!= null)
   //          trans.setText(savedInstanceState.getCharSequence("translation"));
         final TranslateFragment tf = this;
@@ -146,7 +151,7 @@ public class TranslateFragment extends Fragment implements TranslateTask.Comm{
             }
         });
 
-        star = (CheckBox)root.findViewById(R.id.action_favorite);
+        star = root.findViewById(R.id.action_favorite);
         star.setChecked(false);
         star.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -163,7 +168,7 @@ public class TranslateFragment extends Fragment implements TranslateTask.Comm{
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         //this is saved in singleton
 //        outState.putInt("from",from.getSelectedItemPosition());
 //        outState.putInt("to",to.getSelectedItemPosition());

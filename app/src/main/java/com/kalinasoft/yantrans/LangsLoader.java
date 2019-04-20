@@ -11,7 +11,6 @@ import java.io.IOException;
  * Created by Andrey Kalikin on 17.04.2017.
  */
 
-@SuppressWarnings("DefaultFileTemplate")
 class LangsLoader extends AsyncTask<Context,Integer,Integer> {
 
     private Comm delegate = null;

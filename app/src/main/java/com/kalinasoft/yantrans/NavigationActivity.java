@@ -1,5 +1,6 @@
 package com.kalinasoft.yantrans;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -31,7 +32,6 @@ public class NavigationActivity extends AppCompatActivity {
                     transaction.addToBackStack(null);
                     nav_stack.push(item.getItemId());
                     transaction.commit();
-                    //TODO:change fragment to translate fragment
                     break;
                 case R.id.navigation_history:
                     transaction = getSupportFragmentManager().beginTransaction();
@@ -40,7 +40,6 @@ public class NavigationActivity extends AppCompatActivity {
                     nav_stack.push(item.getItemId());
                     transaction.commit();
 
-                    //TODO:change fragment to history fragment
                     break;
                 case R.id.navigation_fav:
                     transaction = getSupportFragmentManager().beginTransaction();
@@ -49,7 +48,6 @@ public class NavigationActivity extends AppCompatActivity {
                     nav_stack.push(item.getItemId());
                     transaction.commit();
 
-                    //TODO:change fragment to history fragment
                     break;
                 default:
                     return false;
@@ -69,11 +67,18 @@ public class NavigationActivity extends AppCompatActivity {
             super.onBackPressed();
         }
         else
-            finish();
+            exitApp();
+    }
+
+    private void exitApp() {
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
     }
 
     private void updateNavigationBarState(int actionId){
-        BottomNavigationView bnw = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView bnw = findViewById(R.id.navigation);
         Menu menu = bnw.getMenu();
 
         for (int i = 0, size = menu.size(); i < size; i++) {
@@ -87,12 +92,15 @@ public class NavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         if (savedInstanceState == null) {
             fragTrans = TranslateFragment.newInstance();
             fragHis = HistoryFragment.newInstance();
             fragFav = FavsFragment.newInstance();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.content, fragTrans);
+            transaction.commit();
         }
         else
         {
@@ -114,9 +122,6 @@ public class NavigationActivity extends AppCompatActivity {
                 fragFav = FavsFragment.newInstance();
 
         }
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content,fragTrans);
-        transaction.commit();
     }
 
     @Override
@@ -127,6 +132,7 @@ public class NavigationActivity extends AppCompatActivity {
             getSupportFragmentManager().putFragment(outState,HistoryFragment.class.getName(),fragHis);
         if (fragFav.isAdded())
             getSupportFragmentManager().putFragment(outState,FavsFragment.class.getName(),fragFav);
+
         super.onSaveInstanceState(outState);
     }
 

@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity implements LangsLoader.Com
         ActionBar ab = getSupportActionBar();
         if(ab!=null)
             ab.hide();
-        progress = (ProgressBar)findViewById(R.id.loading_progress);
+        progress = findViewById(R.id.loading_progress);
         if (loader == null) {
             loader = new LangsLoader(this);
             loader.execute(this);

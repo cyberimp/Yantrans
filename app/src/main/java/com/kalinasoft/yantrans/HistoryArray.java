@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Andrey Kalikin on 17.04.2017.
@@ -23,16 +24,21 @@ class HistoryArray {
     }
 
     void loadArray(Context context){
-        FileInputStream fIn;
         ObjectInputStream osw;
-        try {
-            fIn = context.openFileInput("history.dat");
+        Object item;
+        try (FileInputStream fIn = context.openFileInput("history.dat")) {
             osw = new ObjectInputStream(fIn);
-            content = (ArrayList<HistoryItem>) osw.readObject();
-            osw.close();
-            fIn.close();
-        } catch (IOException | ClassNotFoundException | ClassCastException e) {
+            Object history = osw.readObject();
             content = new ArrayList<>();
+            if (history instanceof List) {
+                for (int i = 0; i < ((List<?>) history).size(); i++) {
+                    item = ((List<?>) history).get(i);
+                    if (item instanceof HistoryItem)
+                        content.add((HistoryItem) item);
+                }
+            }
+            osw.close();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
