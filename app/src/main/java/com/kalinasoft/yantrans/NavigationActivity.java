@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -18,52 +19,49 @@ public class NavigationActivity extends AppCompatActivity {
     TranslateFragment fragTrans;
     HistoryFragment fragHis;
     FavsFragment fragFav;
+    int selected;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            FragmentTransaction transaction;
             switch (item.getItemId()) {
                 case R.id.navigation_main:
-                    transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.content,fragTrans);
-                    transaction.addToBackStack(null);
-                    nav_stack.push(item.getItemId());
-                    transaction.commit();
+                    switchFragment(fragTrans);
                     break;
                 case R.id.navigation_history:
-                    transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.content,fragHis);
-                    transaction.addToBackStack(null);
-                    nav_stack.push(item.getItemId());
-                    transaction.commit();
-
+                    switchFragment(fragHis);
                     break;
                 case R.id.navigation_fav:
-                    transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.content,fragFav);
-                    transaction.addToBackStack(null);
-                    nav_stack.push(item.getItemId());
-                    transaction.commit();
-
+                    switchFragment(fragFav);
                     break;
                 default:
                     return false;
 
             }
-            updateNavigationBarState(item.getItemId());
+            selected = item.getItemId();
+            //           updateNavigationBarState(selected);
             return true;
         }
 
 
     };
 
+    void switchFragment(Fragment newFragment) {
+        FragmentTransaction transaction;
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content, newFragment);
+        transaction.addToBackStack(null);
+        nav_stack.push(selected);
+        transaction.commit();
+    }
+
     @Override
     public void onBackPressed() {
         if(!nav_stack.isEmpty()) {
-            updateNavigationBarState(nav_stack.pop());
+            selected = nav_stack.pop();
+            updateNavigationBarState(selected);
             super.onBackPressed();
         }
         else
@@ -81,10 +79,11 @@ public class NavigationActivity extends AppCompatActivity {
         BottomNavigationView bnw = findViewById(R.id.navigation);
         Menu menu = bnw.getMenu();
 
-        for (int i = 0, size = menu.size(); i < size; i++) {
-            MenuItem item = menu.getItem(i);
-            item.setChecked(item.getItemId() == actionId);
-        }
+        MenuItem item = menu.findItem(actionId);
+        bnw.setOnNavigationItemSelectedListener(null);
+        item.setChecked(true);
+        bnw.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
 
     @Override
@@ -100,6 +99,9 @@ public class NavigationActivity extends AppCompatActivity {
             fragFav = FavsFragment.newInstance();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.content, fragTrans);
+//            transaction.addToBackStack(null);
+            selected = R.id.navigation_main;
+//            nav_stack.push(selected);
             transaction.commit();
         }
         else
@@ -121,6 +123,8 @@ public class NavigationActivity extends AppCompatActivity {
             if (fragFav == null)
                 fragFav = FavsFragment.newInstance();
 
+            selected = savedInstanceState.getInt("selected", R.id.navigation_main);
+            setStack(savedInstanceState.getIntArray("navigation"));
         }
     }
 
@@ -133,7 +137,25 @@ public class NavigationActivity extends AppCompatActivity {
         if (fragFav.isAdded())
             getSupportFragmentManager().putFragment(outState,FavsFragment.class.getName(),fragFav);
 
+        outState.putInt("selected", selected);
+        outState.putIntArray("navigation", getStack());
         super.onSaveInstanceState(outState);
+
     }
+
+    int[] getStack() {
+        int[] result = new int[nav_stack.size()];
+        for (int i = 0; i < result.length; i++)
+            result[i] = nav_stack.get(i);
+        return result;
+    }
+
+    void setStack(int[] stack) {
+        nav_stack.clear();
+        for (int aStack : stack) {
+            nav_stack.push(aStack);
+        }
+    }
+
 
 }
